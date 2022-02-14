@@ -1,0 +1,60 @@
+.weather {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid rgb(197, 193, 193);
+  
+    border-radius: 20px;
+  }
+  
+  h1 {
+    font-weight: 400;
+    color: rgb(70, 66, 66);
+    font-size: 27px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    text-align: left;
+  }
+  
+  .details {
+    list-style-type: none;
+    margin-left: -30px;
+    text-align: left;
+  }
+  .detailsMore {
+    list-style-type: none;
+    font-size: smaller;
+    font-weight: 50;
+    margin-top: 10px;
+    text-align: left;
+  }
+  small {
+    font-size: xx-small;
+    position: fixed;
+  }
+  .temp {
+    font-size: 50px;
+  }
+  .week {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 20px;
+  }
+  .icon {
+    margin-top: 8px;
+    margin-right: 0px;
+    height: 64px;
+    width: 64px;
+  }
+  .celsiusFarh {
+    position: relative;
+    top: -25px;
+    text-decoration-line: none;
+  }
+  .code {
+    text-transform: capitalize;
+    position: relative;
+    text-align: center;
+  }
+  
