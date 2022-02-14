@@ -59,7 +59,7 @@ export default function Weather() {
       </div>
       <div></div>
       <small>
-        <a href="https://github.com/joanagui/Weather-App">Open-source code</a>,
+        <a href="https://github.com/joanagui/weather-react">Open-source code</a>,
         Joana
       </small>
     </div>
