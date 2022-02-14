@@ -10,7 +10,7 @@
   h1 {
     font-weight: 400;
     color: rgb(70, 66, 66);
-    font-size: 27px;
+    font-size: 50px;
     margin-top: 20px;
     margin-bottom: 0px;
     text-align: left;
@@ -26,7 +26,7 @@
     font-size: smaller;
     font-weight: 50;
     margin-top: 10px;
-    text-align: right;
+    text-align: left;
   }
   small {
     font-size: xx-small;
@@ -50,11 +50,16 @@
   .celsiusFarh {
     position: relative;
     top: -25px;
-    text-decoration-line: none;
+  }
+  .celsiusFarh a{
+  text-decoration-line: none;
+  color: black;
   }
   .code {
     text-transform: capitalize;
     position: relative;
     text-align: center;
   }
-  
+  .numberTemp {
+    font-size: 50px;
+  }

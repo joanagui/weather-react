@@ -1,6 +1,8 @@
 import React from "react";
 //import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Weather.css";
+
 
 export default function Weather() {
   let WeatherData = {
@@ -15,8 +17,9 @@ export default function Weather() {
   return (
     <div className="weather">
       <form>
+        <div className="container">
         <div className="row">
-          <div className="col-9">
+          <div className="col-sm-9">
             <input
               className="form-control"
               type="text"
@@ -25,26 +28,27 @@ export default function Weather() {
               autofocus="on"
             />
           </div>
-          <div className="col-3">
+          <div className="col-sm-3 ">
             <input type="submit" value="Search" className="btn btn-secondary" />
           </div>
+        </div>
         </div>
       </form>
       <h1>{WeatherData.city}</h1>
       <ul className="details">
         <li>Last updated: {WeatherData.date}</li>
         <li>{WeatherData.decription}</li>
-      </ul>
+      </ul> 
       <div className="row">
         <div className="col-6">
           <div className="d-flex">
             <img src={WeatherData.imgUrl} alt="" />
             <span>
-              <span>{WeatherData.temp}</span>
-              <span>
+              <span className="numberTemp">{WeatherData.temp}</span>
+              <span className="celsiusFarh">
                 <a href="o">°C</a>
               </span>
-              <span>
+              <span className="celsiusFarh">
                 <a href="o">|°F</a>
               </span>
             </span>
