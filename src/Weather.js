@@ -1,22 +1,50 @@
-import React from "react";
-//import axios from "axios";
+import React, {useState} from "react";
+import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Weather.css";
+import FormattedDate from "./FormattedDate.js";
 
 
-export default function Weather() {
-  let WeatherData = {
-    city: "Lisboa",
-    date: "Monday 14 Feb",
-    decription: "Sunny",
-    humi: "40%",
-    wind: "20",
-    imgUrl: "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
-    temp: "19"
-  };
-  return (
-    <div className="weather">
-      <form>
+export default function Weather(props) {
+  let [city, setCity]=useState(props.defaultCity)
+  let [ready, setReady]=useState(false)
+  let [weatherData, setweatherData]=useState({})
+  
+  function displayWeather(response){
+    setweatherData({
+        temperature: response.data.main.temp,
+        date: new Date(response.data.dt * 1000),
+        description: response.data.weather[0].description,
+        humi: response.data.main.humidity,
+        wind: response.data.wind.speed,
+        imgUrl: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+      });
+    setReady(true);
+    console.log(response.data);
+  }
+
+  function search(){
+    let key ="17e7458113b38b3d9ab8a6cbf84a6119";
+    let url =`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
+    axios.get(url).then(displayWeather);
+
+  }
+
+  function submitCity(event){
+    event.preventDefautlt();
+    alert ("aknxcsc")
+    search();
+    
+}
+  function cityValue(event){
+    setCity(event.target.value)
+    
+  }
+  
+  if (ready){
+   return(
+      <div className="weather container">
+      <form onSubmit={submitCity}>
         <div className="container">
         <div className="row">
           <div className="col-sm-9">
@@ -24,27 +52,30 @@ export default function Weather() {
               className="form-control"
               type="text"
               placeholder="Enter a city"
-              autocomplete="off"
-              autofocus="on"
+              autoComplete="off"
+              autoFocus="on"
+              onChange={cityValue}
             />
           </div>
           <div className="col-sm-3 ">
-            <input type="submit" value="Search" className="btn btn-secondary" />
+            <input type="submit" value="Search" className="btn btn-secondary"  />
           </div>
         </div>
         </div>
       </form>
-      <h1>{WeatherData.city}</h1>
+      <h1>{city}</h1>
       <ul className="details">
-        <li>Last updated: {WeatherData.date}</li>
-        <li>{WeatherData.decription}</li>
+        <li>
+          <FormattedDate date={weatherData.date} />
+        </li>
+        <li>{weatherData.description}</li>
       </ul> 
       <div className="row">
         <div className="col-6">
           <div className="d-flex">
-            <img src={WeatherData.imgUrl} alt="" />
+            <img src={weatherData.imgUrl} alt="icon weather" />
             <span>
-              <span className="numberTemp">{WeatherData.temp}</span>
+              <span className="numberTemp">{Math.round(weatherData.temperature)}</span>
               <span className="celsiusFarh">
                 <a href="o">°C</a>
               </span>
@@ -56,8 +87,8 @@ export default function Weather() {
         </div>
         <div className="col-6">
           <ul className="detailsMore">
-            <li>Humidity: {WeatherData.humi}</li>
-            <li>Wind Speed: {WeatherData.wind} km/h</li>
+            <li>Humidity: {weatherData.humi}</li>
+            <li>Wind Speed: {weatherData.wind} km/h</li>
           </ul>
         </div>
       </div>
@@ -67,5 +98,8 @@ export default function Weather() {
         Joana
       </small>
     </div>
-  );
+   )} else { 
+    search();
+     return (<p>Loading...</p>)
+   }
 }
