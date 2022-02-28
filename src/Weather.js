@@ -2,23 +2,26 @@ import React, {useState} from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Weather.css";
-import FormattedDate from "./FormattedDate.js";
+import WeatherInfo from "./WeatherInfo";
+
+
 
 
 export default function Weather(props) {
-  let [city, setCity]=useState(props.defaultCity)
-  let [tmpCity, setTmpCity]=useState(null)
+  let [queryCity, setQueryCity]=useState(props.defaultCity)
   let [ready, setReady]=useState(false)
   let [weatherData, setweatherData]=useState({})
   
   function displayWeather(response){
     setweatherData({
+        cityName: queryCity,
+        country: response.data.sys.country,
         temperature: response.data.main.temp,
         date: new Date(response.data.dt * 1000),
         description: response.data.weather[0].description,
         humi: response.data.main.humidity,
         wind: response.data.wind.speed,
-        imgUrl: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+        icon: response.data.weather[0].icon
       });
     setReady(true);
     console.log(response.data);
@@ -27,22 +30,20 @@ export default function Weather(props) {
 
   function submitCity(event){
     event.preventDefault();
-    setCity(tmpCity)
     search();
     
    }
   function cityValue(event){
-    setTmpCity(event.target.value)
+    setQueryCity(event.target.value)
     
   }
 
   function search(){
     let key ="17e7458113b38b3d9ab8a6cbf84a6119";
-    let url =`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
+    let url =`https://api.openweathermap.org/data/2.5/weather?q=${queryCity}&appid=${key}&units=metric`;
     axios.get(url).then((response) => displayWeather(response));
 
   }
-
   
   if (ready){
    return(
@@ -66,36 +67,7 @@ export default function Weather(props) {
         </div>
         </div>
       </form>
-      <h1>{city}</h1>
-      <ul className="details">
-        <li>
-          <FormattedDate date={weatherData.date} />
-        </li>
-        <li>{weatherData.description}</li>
-      </ul> 
-      <div className="row">
-        <div className="col-6">
-          <div className="d-flex">
-            <img src={weatherData.imgUrl} alt="icon weather" />
-            <span>
-              <span className="numberTemp">{Math.round(weatherData.temperature)}</span>
-              <span className="celsiusFarh">
-                <a href="o">°C</a>
-              </span>
-              <span className="celsiusFarh">
-                <a href="o">|°F</a>
-              </span>
-            </span>
-          </div>
-        </div>
-        <div className="col-6">
-          <ul className="detailsMore">
-            <li>Humidity: {weatherData.humi}</li>
-            <li>Wind Speed: {weatherData.wind} km/h</li>
-          </ul>
-        </div>
-      </div>
-      <div></div>
+      <WeatherInfo data={weatherData}/>
       <small>
         <a href="https://github.com/joanagui/weather-react">Open-source code</a>,
         Joana
