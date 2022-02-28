@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Weather defaultCity="paris" />
+    <Weather defaultCity="lisbon" />
   </React.StrictMode>,
   document.getElementById('root')
 );

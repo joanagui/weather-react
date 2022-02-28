@@ -7,6 +7,7 @@ import FormattedDate from "./FormattedDate.js";
 
 export default function Weather(props) {
   let [city, setCity]=useState(props.defaultCity)
+  let [tmpCity, setTmpCity]=useState(null)
   let [ready, setReady]=useState(false)
   let [weatherData, setweatherData]=useState({})
   
@@ -21,25 +22,27 @@ export default function Weather(props) {
       });
     setReady(true);
     console.log(response.data);
+    
+  }
+
+  function submitCity(event){
+    event.preventDefault();
+    setCity(tmpCity)
+    search();
+    
+   }
+  function cityValue(event){
+    setTmpCity(event.target.value)
+    
   }
 
   function search(){
     let key ="17e7458113b38b3d9ab8a6cbf84a6119";
     let url =`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
-    axios.get(url).then(displayWeather);
+    axios.get(url).then((response) => displayWeather(response));
 
   }
 
-  function submitCity(event){
-    event.preventDefautlt();
-    alert ("aknxcsc")
-    search();
-    
-}
-  function cityValue(event){
-    setCity(event.target.value)
-    
-  }
   
   if (ready){
    return(
