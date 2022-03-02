@@ -1,35 +1,47 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 
 export default function WeatherTemperature(props){
-let[actualTemp,setActualTemp]=useState(props.temp)
-
-
-useEffect(() => {
-    setActualTemp(props.temp)
-}
-, [props.temp])
+let [active, setActive] = useState('cel');
 
 function farhTemp(event){
 event.preventDefault();
-setActualTemp((props.temp * 1.8) + 32);
+setActive('farh')
 
 }
 
 function celTemp(event){
 event.preventDefault();
-setActualTemp(props.temp)
+setActive('cel')
+}
+
+function calcTemp(temp) {
+    if (active === 'cel') {
+        return temp
+    } else {
+        return (temp * 1.8) + 32
+    }
+}
+
+function checkActive(tempType) {
+    let classes = `${tempType} apointer`
+    if (tempType === active) {
+        classes = `${classes} tempactive`
+    } 
+    return classes
+    
 }
 
 
 return(
     <div>
-    <span className="numberTemp">{Math.round(actualTemp)}</span>
+    <span className="numberTemp">{Math.round(calcTemp(props.temp))}</span>
     <span className="celsiusFarh">
-    <a href="o" onClick={celTemp} className="cel">°C</a>
+    <span onClick={celTemp} className={checkActive('cel')}>°C</span>
     </span>
     <span className="celsiusFarh">
-    <a href="o" onClick={farhTemp} className="farh">|°F</a>
+    <span> | </span>
+    <span onClick={farhTemp} className={checkActive('farh')}>°F</span>
     </span>
     </div>
 )

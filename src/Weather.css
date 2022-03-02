@@ -65,3 +65,13 @@
     font-size: 50px;
     padding-left:10px;
   }
+
+  .apointer {
+    cursor: pointer;
+  }
+
+  .tempactive {
+    color: #333;
+    font-weight: 600;
+    text-decoration: underline;
+  }

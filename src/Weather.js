@@ -3,6 +3,7 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Weather.css";
 import WeatherInfo from "./WeatherInfo";
+import WeatherForecast from "./WeatherForecast"
 
 
 
@@ -21,7 +22,9 @@ export default function Weather(props) {
         description: response.data.weather[0].description,
         humi: response.data.main.humidity,
         wind: response.data.wind.speed,
-        icon: response.data.weather[0].icon
+        icon: response.data.weather[0].icon,
+        lat: response.data.coord.lat,
+        lon: response.data.coord.lon
       });
     setReady(true);
     console.log(response.data);
@@ -39,10 +42,9 @@ export default function Weather(props) {
   }
 
   function search(){
-    let key ="17e7458113b38b3d9ab8a6cbf84a6119";
+    let key = '258655b39b951c09692d8e288bcfc34e';
     let url =`https://api.openweathermap.org/data/2.5/weather?q=${queryCity}&appid=${key}&units=metric`;
-    axios.get(url).then((response) => displayWeather(response));
-
+    axios.get(url).then((response) => {displayWeather(response)});
   }
   
   if (ready){
@@ -68,6 +70,7 @@ export default function Weather(props) {
         </div>
       </form>
       <WeatherInfo data={weatherData}/>
+      <WeatherForecast data={weatherData} />
       <small>
         <a href="https://github.com/joanagui/weather-react">Open-source code</a>,
         Joana

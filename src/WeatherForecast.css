@@ -1,0 +1,9 @@
+.WeatherForecast{
+    text-align: center;
+    max-width: 600px;
+}
+.tempWeek-max{
+    font-weight: 600;
+    opacity: 0,3;
+    margin-right:8px;
+}
