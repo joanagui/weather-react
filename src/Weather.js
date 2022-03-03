@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Weather.css";
@@ -9,9 +9,13 @@ import WeatherForecast from "./WeatherForecast"
 
 
 export default function Weather(props) {
-  let [queryCity, setQueryCity]=useState(props.defaultCity)
+  let [queryCity, setQueryCity]=useState(null)
   let [ready, setReady]=useState(false)
   let [weatherData, setweatherData]=useState({})
+
+  useEffect(() => {
+    setQueryCity(props.defaultCity)
+  }, [props.defaultCity])
   
   function displayWeather(response){
     setweatherData({
@@ -42,9 +46,13 @@ export default function Weather(props) {
   }
 
   function search(){
-    let key = '258655b39b951c09692d8e288bcfc34e';
-    let url =`https://api.openweathermap.org/data/2.5/weather?q=${queryCity}&appid=${key}&units=metric`;
-    axios.get(url).then((response) => {displayWeather(response)});
+    console.log('searching: ', queryCity)
+    if (queryCity && weatherData.cityName !== queryCity) {
+      let key = '258655b39b951c09692d8e288bcfc34e';
+      let url =`https://api.openweathermap.org/data/2.5/weather?q=${queryCity}&appid=${key}&units=metric`;
+      axios.get(url).then((response) => {displayWeather(response)});
+    }
+    
   }
   
   if (ready){
@@ -70,7 +78,7 @@ export default function Weather(props) {
         </div>
       </form>
       <WeatherInfo data={weatherData}/>
-      <WeatherForecast data={weatherData} />
+      <WeatherForecast data={weatherData}/>
       <small>
         <a href="https://github.com/joanagui/weather-react">Open-source code</a>,
         Joana
